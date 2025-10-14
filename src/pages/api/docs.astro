@@ -12,7 +12,7 @@ import Layout from "~/components/layout.astro";
       if (typeof Scalar !== "undefined") {
         try {
           Scalar.createApiReference("#app", {
-            url: "/scalar-astro/openapi.json", // using a local file (public/*) or a remote URL
+            url: "/openapi.json", // using a local file (public/*) or a remote URL
             proxyUrl: "https://proxy.scalar.com",
           });
         } catch (error) {
