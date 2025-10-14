@@ -1,0 +1,21 @@
+---
+// See https://guides.scalar.com/scalar/scalar-api-references/integrations/htmljs
+import Layout from "~/components/layout.astro";
+---
+
+<Layout title="API Reference" description="Scalar Galaxy example API reference, built on Astro">
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+  <noscript>
+    You need to enable JavaScript to use this API reference. You need to enable JavaScript to use
+    this API reference.
+  </noscript>
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      Scalar.createApiReference("#app", {
+        url: "/openapi.json", // using a local file (public/*) or a remote URL
+        proxyUrl: "https://proxy.scalar.com",
+      });
+    });
+  </script>
+</Layout>

@@ -1,0 +1,52 @@
+---
+import { SEO, type SEOProps } from "astro-seo";
+
+// for better seo results
+const defaults: SEOProps = {
+  title: "Astro + Scalar",
+  description: "Astro is a static site builder for JavaScript and TypeScript.",
+  charset: "UTF-8",
+  extend: {
+    meta: [{ name: "viewport", content: "width=device-width, initial-scale=1.0" }],
+    link: [{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+  },
+  openGraph: {
+    basic: {
+      title: "Astro",
+      type: "website",
+      image: "/favicon.svg",
+    },
+    optional: {
+      description: "Astro is a static site builder for JavaScript and TypeScript.",
+    },
+  },
+};
+
+type Props = Partial<Pick<SEOProps, "title" | "description"> & { themeColor: string }>;
+
+const {
+  title = defaults.title,
+  description = defaults.description,
+  themeColor = "#000000",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <SEO
+      {...defaults}
+      {title}
+      titleDefault={defaults.title}
+      titleTemplate={`%s | ${defaults.title}`}
+      {description}
+      extend={{
+        ...defaults.extend,
+        meta: [...(defaults.extend?.meta ?? []), { name: "theme-color", content: themeColor }],
+      }}
+    />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
