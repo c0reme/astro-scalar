@@ -11,5 +11,8 @@
   "dependencies": {
     "astro": "^5.14.4",
     "astro-seo": "^0.8.4"
+  },
+  "devDependencies": {
+    "@kindspells/astro-shield": "^1.7.1"
   }
 }

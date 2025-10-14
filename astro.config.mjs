@@ -1,19 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 
+// https://astro-shield.kindspells.dev/guides/subresource-integrity/static-sites
+import { shield } from "@kindspells/astro-shield";
+
 export default defineConfig({
+  output: "static",
   site: "https://c0reme.github.io",
   base: "/scalar-astro",
-  experimental: {
-    csp: {
-      styleDirective: {
-        hashes: ["sha256-7efUq5R3+Li6oE/jTAFS39w/CDIi5kQY2yW0wDTNc+8="],
-      },
-      scriptDirective: {
-        hashes: ["sha256-7efUq5R3+Li6oE/jTAFS39w/CDIi5kQY2yW0wDTNc+8="],
-      },
-    },
-  },
+  integrations: [shield({ sri: true })],
   redirects: {
     "/": "/scalar-astro/api/docs",
   },

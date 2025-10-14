@@ -5,17 +5,36 @@ import Layout from "~/components/layout.astro";
 
 <Layout title="API Reference" description="Scalar Galaxy example API reference, built on Astro">
   <div id="app"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
-  <noscript>
-    You need to enable JavaScript to use this API reference. You need to enable JavaScript to use
-    this API reference.
-  </noscript>
+  <noscript>You need to enable JavaScript to use this API reference.</noscript>
+  <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference" is:inline></script>
   <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      Scalar.createApiReference("#app", {
-        url: "/openapi.json", // using a local file (public/*) or a remote URL
-        proxyUrl: "https://proxy.scalar.com",
-      });
+    function init() {
+      if (typeof Scalar !== "undefined") {
+        try {
+          Scalar.createApiReference("#app", {
+            url: "/scalar-astro/openapi.json", // using a local file (public/*) or a remote URL
+            proxyUrl: "https://proxy.scalar.com",
+          });
+        } catch (error) {
+          console.error("Error initializing Scalar:", error);
+          setTimeout(init, 1000);
+        }
+      } else setTimeout(init, 100); // retry after a short delay, if Scalar is not yet loaded
+    }
+
+    // fallback to unpkg if cdn fails
+    window.addEventListener("error", function (e) {
+      if (e.target && e.target.src && e.target.src.includes("@scalar/api-reference")) {
+        console.error("Failed to load Scalar library:", e);
+
+        const fallbackScript = document.createElement("script");
+        fallbackScript.src = "https://unpkg.com/@scalar/api-reference";
+        fallbackScript.onload = initScalar;
+        document.head.appendChild(fallbackScript);
+      }
     });
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
   </script>
 </Layout>
