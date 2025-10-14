@@ -4,7 +4,7 @@ import { SEO, type SEOProps } from "astro-seo";
 // for better seo results
 const defaults: SEOProps = {
   title: "Astro + Scalar",
-  description: "Astro is a static site builder for JavaScript and TypeScript.",
+  description: "Astro is a JavaScript web framework optimized for building fast, content-driven websites.",
   charset: "UTF-8",
   extend: {
     meta: [{ name: "viewport", content: "width=device-width, initial-scale=1.0" }],
@@ -17,7 +17,7 @@ const defaults: SEOProps = {
       image: `/favicon.svg`,
     },
     optional: {
-      description: "Astro is a static site builder for JavaScript and TypeScript.",
+      description: "Astro is a JavaScript web framework optimized for building fast, content-driven websites.",
     },
   },
 };
@@ -27,7 +27,7 @@ type Props = Partial<Pick<SEOProps, "title" | "description"> & { themeColor: str
 const {
   title = defaults.title,
   description = defaults.description,
-  themeColor = "#000000",
+  themeColor = "#8D46E7",
 } = Astro.props;
 ---
 
@@ -43,6 +43,17 @@ const {
       extend={{
         ...defaults.extend,
         meta: [...(defaults.extend?.meta ?? []), { name: "theme-color", content: themeColor }],
+      }}
+      openGraph={{
+        ...defaults.openGraph,
+        basic: {
+          ...defaults.openGraph?.basic!,
+          title: title ?? defaults.openGraph?.basic?.title!,
+        },
+        optional: {
+          ...defaults.openGraph?.optional!,
+          description: description ?? defaults.openGraph?.optional?.description!,
+        },
       }}
     />
   </head>
