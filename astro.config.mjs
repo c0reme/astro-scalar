@@ -5,6 +5,6 @@ export default defineConfig({
   site: "https://c0reme.github.io",
   base: "/scalar-astro",
   redirects: {
-    "/": "/api/docs",
+    "/": "/scalar-astro/api/docs",
   },
 });
